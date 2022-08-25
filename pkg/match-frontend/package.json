@@ -6,7 +6,9 @@
   "scripts": {
     "start": "cross-env-shell NODE_ENV=development node scripts/start.js"
   },
+  "type": "module",
   "dependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "webpack": "^5.74.0"
   }
 }
