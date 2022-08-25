@@ -2,5 +2,11 @@
   "name": "match-frontend",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "cross-env-shell NODE_ENV=development node scripts/start.js"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
+  }
 }
