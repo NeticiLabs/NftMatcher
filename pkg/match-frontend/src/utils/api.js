@@ -16,14 +16,14 @@ async function computeSimilarity(data) {
         });
     }catch(err){
         console.log('has error');
-
     }
 
-    
     return {
         code: 200,
         message: null,
-        data: 1.0000
+        data: {
+            similarity: "0.9787878"
+        }
     }
 }
 

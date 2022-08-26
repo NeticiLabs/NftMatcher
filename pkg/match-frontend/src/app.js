@@ -3,9 +3,16 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Alert, Form, Button, Card, FormGroup } from 'react-bootstrap';
 import api from './utils/api.js';
+import { useEffect } from 'react';
 
 function App(props) {
     const [inputs, setInputs] = useState({});
+    const [visible, setVisible] = useState(false);
+    const [data, setData] = useState({});
+    useEffect(()=>{
+        setVisible(false);//渲染的时候初始化
+    });
+    
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -13,7 +20,9 @@ function App(props) {
     }
     const handleSubmit = async (event) => {
         event.preventDefault();
-        await api.computeSimilarity(inputs);
+        const resp = await api.computeSimilarity(inputs);
+        setData(resp.data);
+        setVisible(true);
     }
 
     return <div>
@@ -45,8 +54,12 @@ function App(props) {
                 相似度比较
             </Button>
         </form>
+        <div className='ft-2' >
+            相似度: {data.similarity}
+        </div>
     </div>
 }
+
 
 //Demo
 // function App(props) {
