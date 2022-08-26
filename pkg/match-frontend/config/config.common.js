@@ -5,31 +5,30 @@ initer();
 
 const config = {
     entry: {
-        welcome: path.resolve(process.env.SRC_ROOT, 'welcome')
+         default: path.resolve(process.env.SRC_ROOT),
     },
     output: {
         path: path.resolve(process.env.PROJECT_ROOT, 'dist'),
-        filename: '[name].js'
-    },
-    devServer: {
-        static: path.resolve(process.env.PROJECT_ROOT, 'dist'),
-        port: 8000
+        filename: 'bundle.js'
     },
     plugins:[
         new HtmlWebpackPlugin({
-            template: path.resolve(process.env.SRC_ROOT, 'welcome', 'index.html'),
-            chunks: ['welcome'],
+            template: path.resolve(process.env.SRC_ROOT, 'index.html'),
+            chunks: ['default'],
             filename: 'index.html'
-        })
-    ]
-    // module: {
-    //     rules: [
-            
-    //     ]
-    // },
-    // plugins:[
-
-    // ]
+        }),
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.(jsx|js)$/,
+                use: {
+                    loader: 'babel-loader',
+                },
+                exclude: /(node_modules|bower_components)/, // 千万别忘记添加exclude选项,不然运行可能会报错
+            },
+        ]
+    },
 }
 
 
