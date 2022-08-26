@@ -63,6 +63,7 @@ function App(props) {
 //TODO: 1 设计结果区的样式
 //TODO: 2 让结果区可以隐藏
 //TODO: 3 form data怎么上传文件，特别是文件流怎么读取
+//TODO: 4 添加“计算中，请稍后”旋转提示
 //Demo
 // function App(props) {
 //     const [inputs, setInputs] = useState({});
