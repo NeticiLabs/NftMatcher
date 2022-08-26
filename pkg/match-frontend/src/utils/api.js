@@ -1,12 +1,16 @@
 import axios from 'axios';
 import {HOST,PORT} from '../../config/constants.js';
-
 async function computeSimilarity(data) {
     const formData = new FormData();
     formData.append('file', data.file);
     formData.append('contract', data.contract);
     formData.append('token_id', data.tokenId);
     
+    await new Promise((resolve, reject)=>{
+        setTimeout(()=>{
+            resolve()
+        }, 3000);
+    });
     try{
         resp = await axios({
             method: "post",

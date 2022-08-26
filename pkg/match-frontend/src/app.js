@@ -9,6 +9,7 @@ function App(props) {
     const [inputs, setInputs] = useState({});
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState({});
+    const [loading, setLoading] = useState(false);
     useEffect(()=>{
         console.log('渲染');
         setVisible(false);//渲染的时候初始化
@@ -21,11 +22,15 @@ function App(props) {
     }
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setVisible(false);
+        setLoading(true);
         const resp = await api.computeSimilarity(inputs);
         setData(resp.data);
+        setLoading(false);
         setVisible(true);
     }
-    const result = visible?(resultArea(data)):(<div></div>)
+    const loadingComponent = loading?loadingArea():(<div></div>);
+    const resultComponent = visible?resultArea(data):(<div></div>)
     return <div id='main' className='w-75'>
         <form id='form' onSubmit={handleSubmit}>
             <FormGroup className="mb-5 mt-5" controlId='formBasicEmail'>
@@ -48,14 +53,16 @@ function App(props) {
             </FormGroup>
         
             <Button id="button" 
-                className="mt-3" 
+                className="mt-3 " 
                 variant="primary" 
                 type="submit" 
+                disabled={loading}
                 >
                 进行比较!
             </Button>
         </form>
-        {result}
+        {loadingComponent}
+        {resultComponent}
     </div>
 }
 
@@ -79,11 +86,21 @@ function resultArea(data) {
                     </Card>
                 </div>
 
-                <div className='img'>
-                    </div>
+                <div className='img '>
+                </div>
             </div>
         </div>
 
+    )
+}
+
+function loadingArea() {
+    return (
+        <div id='loading-area' 
+        className='mb-5 spinner-border text-primary' 
+        style={{margin:'auto', display:'block', width:'50px', height:'50px'}}>
+
+        </div>
     )
 }
 
