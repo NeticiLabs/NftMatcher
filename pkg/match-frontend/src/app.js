@@ -10,8 +10,9 @@ function App(props) {
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState({});
     useEffect(()=>{
+        console.log('渲染');
         setVisible(false);//渲染的时候初始化
-    });
+    },[]);
     
     const handleChange = (event) => {
         const name = event.target.name;
@@ -24,8 +25,8 @@ function App(props) {
         setData(resp.data);
         setVisible(true);
     }
-
-    return <div>
+    const result = visible?(resultArea(data)):(<div></div>)
+    return <div id='main' className='w-75'>
         <form id='form' onSubmit={handleSubmit}>
             <FormGroup className="mb-5 mt-5" controlId='formBasicEmail'>
                 <Form.Label className="fs-2">选择你要上传的文件</Form.Label>
@@ -51,13 +52,39 @@ function App(props) {
                 variant="primary" 
                 type="submit" 
                 >
-                相似度比较
+                进行比较!
             </Button>
         </form>
-        <div className='ft-2' >
-            相似度: {data.similarity}
-        </div>
+        {result}
     </div>
+}
+
+function resultArea(data) {
+    return (
+        <div id='result-area' className='mb-5'>
+
+
+            <div id='img-area'>
+                <div className='img'>
+                </div>
+
+                <div id='similarity-area' >
+                    <Card style={{ textAlign:'center', margin:'auto'} } >
+                        <Card.Body>
+                            <Card.Title className='fs-3'>相似度:</Card.Title>
+                            <Card.Text  style={ {fontSize: '40pt'}} >
+                                {data.similarity}
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                </div>
+
+                <div className='img'>
+                    </div>
+            </div>
+        </div>
+
+    )
 }
 
 //TODO: 1 设计结果区的样式

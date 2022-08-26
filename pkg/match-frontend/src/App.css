@@ -1,22 +1,33 @@
-#form {
-    margin-left:auto;
-    margin-right:auto;
-    width: 60%;
-}
 
 #button {
-    width: 50%;
-    height: 80px;
-    font-size: 30px;
-    position: relative;
-    left: 25%;
+    display: block;
+    width: 20%;
+    height: 60pt;
+    font-size: 30pt;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+#similarity-area{
+    /* background-color: grey; */
+    /* text-align:center; */
+}
+
+#img-area{
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.img{
+    width:40%;
+    padding-top: 40%;
+    border: 1px solid green;
+}
 
 #main {
-
-
-    width: 70%;
     margin: auto;
 }
 
