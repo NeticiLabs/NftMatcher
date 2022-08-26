@@ -9,6 +9,8 @@
   "type": "module",
   "dependencies": {
     "cross-env": "^7.0.3",
-    "webpack": "^5.74.0"
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.74.0",
+    "webpack-dev-server": "^4.10.0"
   }
 }

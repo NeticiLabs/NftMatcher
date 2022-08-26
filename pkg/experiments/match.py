@@ -3,7 +3,7 @@ import string
 import numpy as np
 import cv2
 
-
+# ORB
 def feature(img_path=string, vector_size=32):
     # img
     img = cv2.imread(img_path, 1)  # 读取图片
@@ -36,7 +36,7 @@ def compare(v1, v2):
 
 if __name__=='__main__':
     v1 = feature('1.png')
-    v2 = feature('400.png')
+    v2 = feature('2.png')
 
     similiar = compare(v1, v2)
     print(similiar)

@@ -5,7 +5,6 @@ const devPart = {
 
 }
 
-
 const merged = Object.assign({}, commonConfig, devPart);
 
 export default merged;
