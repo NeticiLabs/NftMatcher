@@ -15,13 +15,13 @@ const config = {
     },
     plugins:[
         new HtmlWebpackPlugin({
-            template: path.resolve(process.env.SRC_ROOT, 'index.html'),
+            template: path.resolve(process.env.PUBLIC_ROOT, 'index.html'),
             chunks: ['default'],
             filename: 'index.html'
         }),
         new webpack.ProvidePlugin({
             "React": "react",
-        }),
+        })
     ],
     module: {
         rules: [

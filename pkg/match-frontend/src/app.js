@@ -1,58 +1,84 @@
+import { useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Alert, Form, Button, Card, FormGroup } from 'react-bootstrap';
+import api from './utils/api.js';
 
 function App(props) {
+    const [inputs, setInputs] = useState({});
+    const handleChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setInputs(values => ({...values, [name]:value}));
+    }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        await api.computeSimilarity(inputs);
+    }
+
     return <div>
-        <form id='form' >
-            <FormGroup className="mb-5" controlId='formBasicEmail'>
+        <form id='form' onSubmit={handleSubmit}>
+            <FormGroup className="mb-5 mt-5" controlId='formBasicEmail'>
                 <Form.Label className="fs-2">选择你要上传的文件</Form.Label>
-                <Form.Control className='fs-2' type='file' placeholder='文件上传' />
+                <Form.Control className='fs-2' type='file' placeholder='文件上传' 
+                name='file' onChange={handleChange}/>
             </FormGroup>
 
             <FormGroup className=" mb-5" controlId='formBasicEmail'>
                 <Form.Label className="fs-2">请输入合约地址</Form.Label>
-                <Form.Control className='fs-2 ' type='text' placeholder='Enter contract address' />
+                <Form.Control className='fs-2 ' type='text' placeholder='Enter contract address' 
+                name="contract" onChange={handleChange}/>
             </FormGroup>
 
             <FormGroup className="mb-5" controlId='formBasicPassword'>
                 <Form.Label className="fs-2">请输入token Id</Form.Label>
-                <Form.Control className='fs-2' type="text" placeholder='TokenId'></Form.Control>
+                <Form.Control className='fs-2' type="text" placeholder='Enter token Id'
+                name="tokenId" onChange={handleChange}
+                ></Form.Control>
             </FormGroup>
         
-            <Button id="button" className="mt-3" variant="primary" type="submit">
+            <Button id="button" 
+                className="mt-3" 
+                variant="primary" 
+                type="submit" 
+                >
                 相似度比较
             </Button>
         </form>
     </div>
 }
 
-// function App(props){
-//     return (<div>
-//             <div class='input'>
-                
-//                 <input type="file" class='textBox'></input>
-//             </div>
-//         <div id='main'>
+//Demo
+// function App(props) {
+//     const [inputs, setInputs] = useState({});
+//     const handleChange = (event) => {
+//         const name = event.target.name;//Form.Control的name属性
+//         const value = event.target.value;
+//         setInputs(values => ({...values, [name]:value}));
+//         //inputs = {xxxx} 不能通过这种形式，因为inputs是只读的。
+//     }
+//     const handleSubmit = (event) => {
+//         event.preventDefault();
+//         alert(JSON.stringify(inputs));
+//     }
 
-//             <div class='input'>
-//                 请输入合约地址：
-//                 <input class='textBox' type="text">
-//                 </input>
-//             </div>
-//             <div class='input'>
-//                 请输入tokenId:
-//                 <input  class='textBox' type="text" >
-//                 </input>
-//             </div>
-//         </div>
-
-//         <button id='submit'>提交</button>
-//         <div id='result-area'>
-//         </div>
+//     return <div>
+//         <form id='form' onSubmit={handleSubmit}>
+//             <FormGroup  controlId='formBasicEmail'>
+//                 <Form.Label >请输入合约地址</Form.Label>
+//                 <Form.Control  type='text'
+//                     name="address"
+//                     onChange={handleChange}/>
+//             </FormGroup>
+        
+//             <Button id="button" variant="primary" 
+//                 type="submit" 
+//                 >
+//                 相似度比较
+//             </Button>
+//         </form>
 //     </div>
-//     );
-// } 
+// }
 
 
 export default App;
