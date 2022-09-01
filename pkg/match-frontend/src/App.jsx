@@ -6,50 +6,54 @@ import api from './utils/api.js';
 import { useEffect } from 'react';
 
 function App(props) {
-    const [inputs, setInputs] = useState({});
+
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(false);
     useEffect(()=>{
-        console.log('渲染');
         setVisible(false);//渲染的时候初始化
     },[]);
     
-    const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({...values, [name]:value}));
-    }
+    
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        event.preventDefault(); // 关闭默认的行为（激活action）
         setVisible(false);
         setLoading(true);
-        const resp = await api.computeSimilarity(inputs);
+        const form = event.currentTarget;
+        console.log(form);
+        const resp = await api.computeSimilarity(form);
         setData(resp.data);
         setLoading(false);
         setVisible(true);
+
     }
     const loadingComponent = loading?loadingArea():(<div></div>);
-    const resultComponent = visible?resultArea(data):(<div></div>)
-    return <div id='main' className='w-75'>
-        <form id='form' onSubmit={handleSubmit}>
-            <FormGroup className="mb-5 mt-5" controlId='formBasicEmail'>
+    const resultComponent = visible?<ResultArea similarity={data.similarity}/>:(<div></div>)
+    return (
+    <div id='main' className='w-75'>
+        <Form  id='form' onSubmit={handleSubmit} validated='true'>
+            <FormGroup className="mb-5 mt-5" controlId='formFileUpload'>
                 <Form.Label className="fs-2">选择你要上传的文件</Form.Label>
                 <Form.Control className='fs-2' type='file' placeholder='文件上传' 
-                name='file' onChange={handleChange}/>
+                name='file'  required/>
+                <Form.Control.Feedback className='fs-4' type='valid'>正确</Form.Control.Feedback>
+                <Form.Control.Feedback className='fs-4' type='invalid'>请选择</Form.Control.Feedback>
             </FormGroup>
 
-            <FormGroup className=" mb-5" controlId='formBasicEmail'>
+            <FormGroup className="mb-5" controlId='formBasicContract'>
                 <Form.Label className="fs-2">请输入合约地址</Form.Label>
-                <Form.Control className='fs-2 ' type='text' placeholder='Enter contract address' 
-                name="contract" onChange={handleChange}/>
+                <Form.Control className='fs-2 ' type='text' placeholder='合约地址' 
+                name="contract" required/>
+                <Form.Control.Feedback className='fs-4' type='valid'>正确</Form.Control.Feedback>
+                <Form.Control.Feedback className='fs-4' type='invalid'>请输入合约地址</Form.Control.Feedback>
             </FormGroup>
 
             <FormGroup className="mb-5" controlId='formBasicPassword'>
                 <Form.Label className="fs-2">请输入token Id</Form.Label>
-                <Form.Control className='fs-2' type="text" placeholder='Enter token Id'
-                name="tokenId" onChange={handleChange}
-                ></Form.Control>
+                <Form.Control className='fs-2' type="text" placeholder='tokenId'
+                name="tokenId" required></Form.Control>
+                <Form.Control.Feedback className='fs-4' type='valid'>正确</Form.Control.Feedback>
+                <Form.Control.Feedback className='fs-4' type='invalid'>请输入TokenId</Form.Control.Feedback>
             </FormGroup>
         
             <Button id="button" 
@@ -60,17 +64,17 @@ function App(props) {
                 >
                 进行比较!
             </Button>
-        </form>
+        </Form>
         {loadingComponent}
         {resultComponent}
+        
     </div>
+    )
 }
 
-function resultArea(data) {
+function ResultArea(props) {
     return (
         <div id='result-area' className='mb-5'>
-
-
             <div id='img-area'>
                 <div className='img'>
                 </div>
@@ -80,7 +84,7 @@ function resultArea(data) {
                         <Card.Body>
                             <Card.Title className='fs-3'>相似度:</Card.Title>
                             <Card.Text  style={ {fontSize: '40pt'}} >
-                                {data.similarity}
+                                {props.similarity}
                             </Card.Text>
                         </Card.Body>
                     </Card>

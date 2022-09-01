@@ -1,33 +1,19 @@
 import axios from 'axios';
 import {HOST,PORT} from '../../config/constants.js';
-async function computeSimilarity(data) {
-    const formData = new FormData();
-    formData.append('file', data.file);
-    formData.append('contract', data.contract);
-    formData.append('token_id', data.tokenId);
-    
+async function computeSimilarity(form) {
+    const formData = new FormData(form);
     await new Promise((resolve, reject)=>{
-        setTimeout(()=>{
-            resolve()
-        }, 3000);
-    });
+        setTimeout( ()=>{resolve()}, 3000);
+    })
     try{
-        resp = await axios({
-            method: "post",
-            url: `http://${HOST}:${PORT}/api/v1/similarity`,
-            data: formData,
-            headers: { "Content-Type": "multipart/form-data"},
-        });
+        let resp = await axios.post(
+            `http://${HOST}:${PORT}/api/v1/similarity`,
+            formData,
+            { headers:{"Content-Type": "multipart/form-data"}},
+        );
+        return resp.data;
     }catch(err){
-        console.log('has error');
-    }
-
-    return {
-        code: 200,
-        message: null,
-        data: {
-            similarity: "0.9787878"
-        }
+        console.log('has error:', err.message);
     }
 }
 
