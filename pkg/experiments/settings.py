@@ -50,23 +50,23 @@ templates = {
             'pos_w': 0
         },
         'person': {
-            'pos_h': 300,
-            'pos_w': 300
+            'pos_h': 50,
+            'pos_w': 50,
         },
         'animal': {
-            'pos_h': 1024,
-            'pos_w': 1024
+            'pos_h': 100,
+            'pos_w': 100
         },
         'neck': {
-            'pos_h': 1222,
-            'pos_w': 1222
+            'pos_h': 200,
+            'pos_w': 200
         },
         'leftEye': {
-            'pos_h': 134,
+            'pos_h': 300,
             'pos_w': 512
         },
         'rightEye': {
-            'pos_h': 123,
+            'pos_h': 500,
             'pos_w': 167
         },
         'mouth': {
